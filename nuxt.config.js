@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -24,7 +25,9 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/vue2-google-maps' }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -35,6 +38,7 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    `@nuxtjs/dotenv`,
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -68,6 +72,14 @@ export default {
     },
   },
 
+  publicRuntimeConfig:{
+    googleAPIKey: process.env.GOOGLE_API_KEY,
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, ctx) {},
+    vendor: ['vue2-google-maps'],
+    transpile: [/^vue2-google-maps($|\/)/]
+  },
 }
